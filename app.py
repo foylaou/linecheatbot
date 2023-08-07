@@ -1,15 +1,8 @@
 # LineBot所需套件
-from flask import Flask, request, abort
-from linebot import (LineBotApi, WebhookHandler, exceptions)
-from linebot.exceptions import (InvalidSignatureError)
-from linebot.models import *
+from line_bot_api import *
+from events.basic import *
 
 app = Flask(__name__)
-
-# Channel access token
-line_bot_api = LineBotApi("jvP6prUhvT+cbHtN3B/cEgugl32WUAA1Oy1CD7FJE/vmcdv8wRgWAd+0lfi83dJEsEv6/2R8cDyJad5BF5F9Icrp++c9bzNjGzoxppc2kf6bJYio6Hk0r/zs1sVD4LW9C2v6lQC834wnP0I888kX6QdB04t89/1O/w1cDnyilFU=")
-# Channel secret
-handler = WebhookHandler("974df81e00a95ccd63aab56e02f62d52")
 
 
 @app.route("/callback", methods=["POST"])
@@ -29,6 +22,16 @@ def callback():
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
+def callback():
+    signature = request.headers['X-Line-Signature']
+
+    body = request.get_data(as_text = True)
+    app.logger.info("Request body: "+body)
+    try:
+        handler.handel(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+    return 'OK'
 def handle_message(event):
     emoji = [
         {
