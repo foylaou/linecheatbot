@@ -22,7 +22,7 @@ def handl_message(event):
             TextSendMessage(text=content)
         )
     ####################股票區#########################
-    if message_text == "股價查詢":
+    if event.message.text == '股價查詢':
         line_bot_api.push_message(
         uid,
         TextSendMessage("請輸入'#' + '股票代號'\n範例：#2330")
