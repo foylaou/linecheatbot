@@ -43,7 +43,7 @@ def handle_message(event):
         },
     ]
     test_message = TextSendMessage(text='''$ Master Finance $
-    Hello! 你好，你住哪裡?我住高雄，約嗎?''',emoji=emoji)
+    Hello! 你好，你住哪裡?，我住高雄，約嗎?''',emoji=emoji)
     sticker_message = StickerSendMessage(
         package_id="8522",
         sticker_id="16581271",
