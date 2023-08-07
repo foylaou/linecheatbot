@@ -37,7 +37,7 @@ def handle_message(event):
             "emojiId": "11069851",
         },
         {
-            "index": 0,
+            "index": 17,
             "porductId": "789",
             "emojiId": "10855",
         },
