@@ -26,9 +26,9 @@ def callback():
 def handle_message(event):
     message_text = str(event.message.text).lower()
 
-    if message_text == '@使用說明':
+    if message_text != '@使用說明' or '@help' :
         about_us_event(event)
-    if message_text == '@小幫手':
+    if message_text == '@使用說明' or '@help' :
         Usage(event)
 
 if __name__ == "__main__":
