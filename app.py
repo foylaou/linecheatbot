@@ -1,5 +1,6 @@
 from line_bot_api import *
 from events.basic import *
+from events.oil import *
 
 app = Flask(__name__)
 
@@ -27,6 +28,12 @@ def handle_message(event):
         about_us_event(event)
         Usage(event)
         help_event(event)
+    if event.message.text == '想知道油價':
+        content = oil_price()
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=content)
+        )
 
 if __name__ == "__main__":
     app.run()
