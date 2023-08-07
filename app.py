@@ -33,12 +33,12 @@ def handle_message(event):
     emoji = [
         {
             "index":0,
-            "porductId": "5ac2213e040ab15980c9b447",
+            "productId": "5ac2213e040ab15980c9b447",
             "emojiId": "002",
         },
         {
             "index": 17,
-            "porductId": "5ac2213e040ab15980c9b447",
+            "productId": "5ac2213e040ab15980c9b447",
             "emojiId": "002",
         },
     ]
