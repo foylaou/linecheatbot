@@ -30,8 +30,22 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+    emoji = [
+        {
+            "index":0,
+            "porductId": "6359",
+            "emojiId": "11069851",
+        },
+        {
+            "index": 0,
+            "porductId": "789",
+            "emojiId": "10855",
+        },
+    ]
+    test_message = TextSendMessage(text='''$ Master Finance $
+    Hello! 你好，你住哪裡?，我住高雄，約嗎?''')
+    # message = TextSendMessage(text=event.message.text)
+    # line_bot_api.reply_message(event.reply_token, message)
 
 
 if __name__ == "__main__":
