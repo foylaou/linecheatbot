@@ -27,7 +27,6 @@ def handle_message(event):
     if message_text == '@使用說明':
         about_us_event(event)
         Usage(event)
-        help_event(event)
     if event.message.text == '想知道油價':
         content = oil_price()
         line_bot_api.reply_message(
