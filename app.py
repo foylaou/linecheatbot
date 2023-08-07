@@ -29,7 +29,7 @@ def handle_message(event):
     if message_text == '@使用說明' :
         about_us_event(event)
         Usage(event)
-    if event.message.text == '@使用說明':
+    if event.message.text == 'help':
         buttons_template = TemplateSendMessage(
             alt_text='小幫手 template',
             template=ButtonsTemplate(
