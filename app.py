@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handl_message(event):
-    profile = line_bot_api.get_profile(event.score.user_id)
+    profile = line_bot_api.get_profile(event.source.user_id)
     uid = profile.user_id
     message_text = str(event.message.text).lower()
 
