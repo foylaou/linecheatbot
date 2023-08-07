@@ -37,12 +37,12 @@ def handle_message(event):
             "emojiId": "002",
         },
         {
-            "index": 15,
+            "index": 17,
             "productId": "5ac2213e040ab15980c9b447",
             "emojiId": "002",
         },
     ]
-    test_message = TextSendMessage(text='''$Master Finance$Hello! 你好，你住哪裡?我住高雄，約嗎?''',emoji=emoji)
+    test_message = TextSendMessage(text='''$ Master Finance $ Hello! 你好，你住哪裡?我住高雄，約嗎?''',emoji=emoji)
     sticker_message = StickerSendMessage(
         package_id="8522",
         sticker_id="16581271",
