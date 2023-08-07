@@ -58,5 +58,18 @@ def handle_message(event):
         )
         line_bot_api.reply_message(event.reply_token, buttons_template)
 
+    @handler.add(FollowEvent)
+    def handle_follow(event):
+        welcome_msg = '''Hello! 歡迎加入財經小幫手'''
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=welcome_msg)
+        )
+
+    @handler.add(UnfollowEvent)
+    def handle_unfollow(event):
+        print(event)
+
+
 if __name__ == "__main__":
     app.run()
