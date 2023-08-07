@@ -18,13 +18,15 @@ def callback():
 
     return 'OK'
 
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     message_text = str(event.message.text).lower()
 
-    if message_text == '@使用說明' :
+    if message_text == '@使用說明':
         about_us_event(event)
         Usage(event)
+        help_event(event)
 
 if __name__ == "__main__":
     app.run()
