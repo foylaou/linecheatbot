@@ -18,6 +18,8 @@ def stock_reply_other(stockNumber):
         )
     )
     return text_message
+
+
 def show_Button():
     flex_message = FlexSendMessage(
         alt_text="幣別種類",
@@ -348,5 +350,3 @@ def show_Button():
 
     )
     return flex_message
-
-
