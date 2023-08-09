@@ -4,6 +4,8 @@ from events.oil import *
 from events.msg_Template import *
 import re
 import twstock
+import datetime
+
 app = Flask(__name__)
 
 
