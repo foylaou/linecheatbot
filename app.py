@@ -60,17 +60,7 @@ def handle_message(event):
         btn_msg = stock_reply_other(stockNumber)
         line_bot_api.push_message(uid, btn_msg)
         return 0
-    
-    if re.match("關注[0-9]{4}[<>][0-9]", msg):
-        stockNumber = msg[2:6]
-        content = write_my_stock(uid, user_name, stockNumber, msg[6:7], msg[7:])
-        line_bot_api.push_message(uid, TextSendMessage(content))
-    else:
-        content = write_my_stock(uid, user_name, stockNumber, "未設定", "未設定")
-        line_bot_api.push_message(uid, TextSendMessage(content))
-        return 0
-    
-    if (emsg.startswith('#')):
+        if (emsg.startswith('#')):
         text = emsg[1:]
         content = ""
 
@@ -97,6 +87,16 @@ def handle_message(event):
             content += f"[{date5[i].strftime('%Y-%m-%d')} {price5[i]}]"
 
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=content))
+    if re.match("關注[0-9]{4}[<>][0-9]", msg):
+        stockNumber = msg[2:6]
+        content = write_my_stock(uid, user_name, stockNumber, msg[6:7], msg[7:])
+        line_bot_api.push_message(uid, TextSendMessage(content))
+    else:
+        content = write_my_stock(uid, user_name, stockNumber, "未設定", "未設定")
+        line_bot_api.push_message(uid, TextSendMessage(content))
+        return 0
+    
+
 
     # ############"@小幫手"############
     if message_text == "@小幫手":
