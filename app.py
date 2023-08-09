@@ -1,7 +1,8 @@
 from line_bot_api import *
 from events.basic import *
 from events.oil import *
-from events.msg_Template import *
+from events.Msg_Template import *
+from model.mongodb import *
 import re
 import twstock
 import datetime
@@ -28,10 +29,12 @@ def callback():
 def handle_message(event):
     profile = line_bot_api.get_profile(event.source.user_id)
     uid = profile.user_id  # 使用者id
+    user_name = profile.display_name
+    print(user_name)
     message_text = str(event.message.text).lower()
     msg = str(event.message.text).upper().strip()
     emsg = event.message.text
-    user_name = profile.display_name
+
     # ############"使用說明"############
     if message_text == "@使用說明":
         about_us_event(event)
@@ -51,66 +54,56 @@ def handle_message(event):
         uid, 
         TextSendMessage("請輸入'#' + '股票代號'\n範例：#2330")
         )
-    if re.match("想知道股價[0-9]" , msg):
-        stockNumber = msg[5:9]
+
+    if re.match("想知道股價[0-9]", msg):
+        stockNumber = msg[-4:]
         btn_msg = stock_reply_other(stockNumber)
-        line_bot_api.push_message(uid , btn_msg)
+        line_bot_api.push_message(uid, btn_msg)
         return 0
-    if re.mmatch('關注[0-9]{4}[<>][0-9]',msg):
-        twstockNumber = msg[2:6]
-        content = write_my_stock(uid,user_name,stockNumber,msg[6:7],msg[7:])
-        line_bot_api.push_message(uid,TextSendMessage(content))
+    
+    if re.match("關注[0-9]{4}[<>][0-9]", msg):
+        stockNumber = msg[2:6]
+        content = write_my_stock(uid, user_name, stockNumber, msg[6:7], msg[7:])
+        line_bot_api.push_message(uid, TextSendMessage(content))
     else:
-        content = write_my_stock(uid,user_name,stockNumber,"未設定","未設定")
+        content = write_my_stock(uid, user_name, stockNumber, "未設定", "未設定")
         line_bot_api.push_message(uid, TextSendMessage(content))
         return 0
-    #股價查詢
-
-
     
     if (emsg.startswith('#')):
         text = emsg[1:]
-        content =''
+        content = ""
 
-        stock_rt = twstock.realtime.get(text)
+        try:
+            stock_rt = twstock.realtime.get(text)
+        except Exception as e:
+            print(e)
+
         my_datetime = datetime.datetime.fromtimestamp(stock_rt['timestamp']+8*60*60)
-        my_time = my_datetime.strftime('%H:%M:%S')
+        my_time = my_datetime.strftime("%H:%M:%S")
 
-        content +='%s (%s) %s\n' % (
-            stock_rt['info']['name'],
-            stock_rt['info']['code'],
-            my_time)
-        
-        content += '現價: %s / 開盤: %s\n'%(
-            stock_rt['realtime']['latest_trade_price'],
-            stock_rt['realtime']['open'])
-        
-        content += '最高: %s / 最低:%s\n'%(
-            stock_rt['realtime']['high'],
-            stock_rt['realtime']['low'])
-        
-        content += '量: %s\n'%(stock_rt['realtime']['accumulate_trade_volume'])
+        content += f"{stock_rt['info']['name']} ({stock_rt['info']['code']}) {my_time}"
+        content += f"現價: {stock_rt['realtime']['latest_trade_price']} / 開盤: {stock_rt['realtime']['open']}\n"
+        content += f"最高: {stock_rt['realtime']['high']} / 最低: {stock_rt['realtime']['low']}\n"
+        content += f"量: {stock_rt['realtime']['accumulate_trade_volume']}\n"
 
         stock = twstock.Stock(text)
-        content += '-----\n'
-        content += '最近五日價格: \n'
+
+        content += "-" * 10
+        content += "近日五日價格: \n"
         price5 = stock.price[-5:][::-1]
         date5 = stock.date[-5:][::-1]
         for i in range(len(price5)):
-            content += '[%s] %s\n' % (date5[i].strftime("%Y-%m-%d"), price5[i])
-        line_bot_api.reply_message(
-            event.reply_token, 
-            TextSendMessage(text=content)
-        )
+            content += f"[{date5[i].strftime('%Y-%m-%d')} {price5[i]}]"
 
-     # ############"@小幫手"############
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=content))
+
+    # ############"@小幫手"############
     if message_text == "@小幫手":
         button_template = Template_msg()
         line_bot_api.reply_message(
         event.reply_token, button_template
         )
-
-        
 
 
 @handler.add(FollowEvent)

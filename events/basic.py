@@ -5,17 +5,17 @@ def about_us_event(event):
     emojis = [
         {
             "index": 0, 
-            "productId": "5ac2197b040ab15980c9b43d", 
-            "emojiId": "002"
+            "productId": "5ac21a18040ab15980c9b43e", 
+            "emojiId": "009"
         }, 
         {
-            "index": 13, 
-            "productId": "5ac2197b040ab15980c9b43d", 
-            "emojiId": "002"
+            "index": 16, 
+            "productId": "5ac21a18040ab15980c9b43e", 
+            "emojiId": "014"
         }
     ]
 
-    welcome_message = TextSendMessage(text='''$ MoneyMoney $
+    welcome_message = TextSendMessage(text='''$ Agave Finance $
     您好，歡迎加入成為 Agave Finance 的好友!!!
     我是Agave財經小幫手~
     下方選單有：
@@ -23,7 +23,7 @@ def about_us_event(event):
     使用上有任何問題可以參考使用說明''', emojis=emojis)
 
     sticker_message = StickerSendMessage(
-        package_id="8522", sticker_id="16581271"
+        package_id="11537", sticker_id="52002735"
     )
 
     button_template = Template_msg()
@@ -47,16 +47,14 @@ def Usage(event):
     push_msg(
         event, 
         """
-            🌜查詢方法🌛
-    🌎小幫手可以查詢
-    油價~~股價~~匯率
-        
-    Ⅰ  股價查詢➸輸入#股票代號
-    Ⅱ  油價查詢➸輸入#92、95、98、超柴
-    Ⅲ  匯率查詢➸輸入#國家
-    Ⅳ 
-    Ⅴ 
-    Ⅵ 
+        ℹ查詢方法ℹ
+        🧞‍♂小幫手可以查詢股價、油價、匯率
+        ➊股價查詢➡輸入股票代號
+        ➋油價查詢➡輸入92、95、98、超柴
+        ➌匯率查詢➡輸入國家
+        ➍test
+        ➎test
+        ➏test
         """
     )
 
@@ -67,7 +65,7 @@ def Template_msg():
             template=ButtonsTemplate(
                 title="選擇服務", 
                 text="請選擇", 
-                thumbnail_image_url="https://i.imgur.com/dM8sKOC.jpg", 
+                thumbnail_image_url="https://i.imgur.com/27uxIhZ.jpg", 
                 actions=[
                     MessageTemplateAction(
                         label="股價查詢", 
