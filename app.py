@@ -2,6 +2,7 @@ from line_bot_api import *
 from events.basic import *
 from events.oil import *
 from events.msg_Template import *
+import re
 app = Flask(__name__)
 
 
